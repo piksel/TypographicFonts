@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace jnm2.TypographicFonts
 {
@@ -18,6 +19,8 @@ namespace jnm2.TypographicFonts
             var subfamilesByFont = new Dictionary<string, List<TypographicFont>>();
 
             foreach (var installedFontFile in TypographicFont.GetInstalledFontFiles())
+            {
+                if (!File.Exists(installedFontFile)) continue;
                 foreach (var font in TypographicFont.FromFile(installedFontFile))
                 {
                     List<TypographicFont> list;
@@ -26,6 +29,7 @@ namespace jnm2.TypographicFonts
 
                     list.Add(font);
                 }
+            }
 
             var r = new List<TypographicFontFamily>();
 
