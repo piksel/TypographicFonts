@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using Microsoft.Win32;
 
@@ -67,8 +68,21 @@ namespace jnm2.TypographicFonts
         /// Gets the font container's location on disk.
         /// </summary>
         public string FileName { get; private set; }
-        
-        private TypographicFont(string family, string subFamily, string name, TypographicFontWeight weight, bool bold, bool italic, bool oblique, bool underlined, bool negative, bool outlined, bool strikeout, bool regular, string fileName)
+
+        public FontStyle FontStyle
+        {
+            get
+            {
+                var fs = (FontStyle)0;
+                if (Bold) fs |= FontStyle.Bold;
+                if (Italic) fs |= FontStyle.Italic;
+                if (Underlined) fs |= FontStyle.Underline;
+                if (Strikeout) fs |= FontStyle.Strikeout;
+
+                return fs;
+            }
+        }
+
         internal Panose Panose { get; private set; }
 
         private TypographicFont(string family, string subFamily, string name, TypographicFontWeight weight, bool bold, bool italic, bool oblique, bool underlined, bool negative, bool outlined, bool strikeout, bool regular, string fileName, byte[] panose)

@@ -51,6 +51,21 @@ namespace jnm2.TypographicFonts
             this.Fonts = fonts;
         }
 
+        public TypographicFont NormalFont {
+            get {
+                var bestFont = Fonts[0];
+                foreach(var font in Fonts)
+                {
+                    var sub = font.SubFamily?.ToLower() ?? "";
+                    if( !font.Bold && !font.Italic && (sub == "regular" || sub == "" || sub == "normal"))
+                    {
+                        bestFont = font;
+                    }
+                }
+                return bestFont;
+            }
+        }
+
         /// <summary>
         /// Gets the name of this typographic font family.
         /// </summary>
