@@ -108,7 +108,8 @@ namespace jnm2.TypographicFonts
                     (os2Info.Value.Style & FontStyle.Outlined) != 0,
                     (os2Info.Value.Style & FontStyle.Strikeout) != 0,
                     (os2Info.Value.Style & FontStyle.Regular) != 0,
-                    filename
+                    filename,
+                    os2Info.Value.Panose
                 );
             }
 
@@ -206,11 +207,13 @@ namespace jnm2.TypographicFonts
             {
                 public readonly TypographicFontWeight Weight;
                 public readonly FontStyle Style;
+                public readonly byte[] Panose;
 
-                public OS2Info(TypographicFontWeight weight, FontStyle style)
+                public OS2Info(TypographicFontWeight weight, FontStyle style, byte[] panose)
                 {
                     Weight = weight;
                     Style = style;
+                    Panose = panose;
                 }
             }
             // http://www.microsoft.com/typography/otspec/os2.htm
@@ -218,9 +221,11 @@ namespace jnm2.TypographicFonts
             {
                 br.BaseStream.Seek(offset + 4, SeekOrigin.Begin);
                 var weight = (TypographicFontWeight)br.ReadUInt16();
-                br.BaseStream.Seek(56, SeekOrigin.Current);
+                br.BaseStream.Seek(26, SeekOrigin.Current);
+                var panose = br.ReadBytes(10);
+                br.BaseStream.Seek(10, SeekOrigin.Current);
                 var style = (FontStyle)br.ReadUInt16();
-                return new OS2Info(weight, style);
+                return new OS2Info(weight, style, panose);
             }
 
 

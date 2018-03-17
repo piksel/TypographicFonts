@@ -69,6 +69,9 @@ namespace jnm2.TypographicFonts
         public string FileName { get; private set; }
         
         private TypographicFont(string family, string subFamily, string name, TypographicFontWeight weight, bool bold, bool italic, bool oblique, bool underlined, bool negative, bool outlined, bool strikeout, bool regular, string fileName)
+        internal Panose Panose { get; private set; }
+
+        private TypographicFont(string family, string subFamily, string name, TypographicFontWeight weight, bool bold, bool italic, bool oblique, bool underlined, bool negative, bool outlined, bool strikeout, bool regular, string fileName, byte[] panose)
         {
             this.Family = family;
             this.SubFamily = subFamily;
@@ -83,6 +86,7 @@ namespace jnm2.TypographicFonts
             this.Regular = regular;
             this.FileName = fileName;
             this.Oblique = oblique;
+            this.Panose = new Panose(panose);
         }
 
         public override string ToString()
