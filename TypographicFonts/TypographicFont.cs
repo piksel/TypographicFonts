@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using Microsoft.Win32;
 
 namespace jnm2.TypographicFonts
 {
     [DebuggerDisplay("{ToString(),nq}")]
-    public sealed partial class TypographicFont
+    public sealed class TypographicFont
     {
         /// <summary>
         /// The typographic family. This returns "Arial" for "Arial Black" and "Arial Narrow," which allows them to be grouped with the other "Arial" fonts even though the names are different.
@@ -35,35 +35,35 @@ namespace jnm2.TypographicFonts
         /// <summary>
         /// If true, this font is natively bold.
         /// </summary>
-        public bool Bold { get; private set; }
+        public bool Bold => OS2Info.Style.HasFlag(FontReader.FontStyle.Bold);
         /// <summary>
         /// If true, this font is natively italic.
         /// </summary>
-        public bool Italic { get; private set; }
+        public bool Italic => OS2Info.Style.HasFlag(FontReader.FontStyle.Italic);
         /// <summary>
         /// If true, this font is natively oblique.
         /// </summary>
-        public bool Oblique { get; private set; }
+        public bool Oblique => OS2Info.Style.HasFlag(FontReader.FontStyle.Oblique);
         /// <summary>
         /// If true, this font is natively underlined.
         /// </summary>
-        public bool Underlined { get; private set; }
+        public bool Underlined => OS2Info.Style.HasFlag(FontReader.FontStyle.Underscore);
         /// <summary>
         /// If true, this font is natively negative.
         /// </summary>
-        public bool Negative { get; private set; }
+        public bool Negative => OS2Info.Style.HasFlag(FontReader.FontStyle.Negative);
         /// <summary>
         /// If true, this font is natively outline.
         /// </summary>
-        public bool Outlined { get; private set; }
+        public bool Outlined => OS2Info.Style.HasFlag(FontReader.FontStyle.Outlined);
         /// <summary>
         /// If true, this font is natively overstruck.
         /// </summary>
-        public bool Strikeout { get; private set; }
+        public bool Strikeout => OS2Info.Style.HasFlag(FontReader.FontStyle.Strikeout);
         /// <summary>
         /// Characters are in the standard weight/style for the font.
         /// </summary>
-        public bool Regular { get; private set; }
+        public bool Regular => OS2Info.Style.HasFlag(FontReader.FontStyle.Regular);
         /// <summary>
         /// Gets the font container's location on disk.
         /// </summary>
@@ -83,31 +83,30 @@ namespace jnm2.TypographicFonts
             }
         }
 
-        internal Panose Panose { get; private set; }
+        public Panose Panose { get; private set; }
 
-        private TypographicFont(string family, string subFamily, string name, TypographicFontWeight weight, bool bold, bool italic, bool oblique, bool underlined, bool negative, bool outlined, bool strikeout, bool regular, string fileName, byte[] panose)
+        public FontReader.FamilyNamesInfo FamilyNames { get; private set; }
+        public FontReader.OS2Info OS2Info { get; private set; }
+
+        public TypographicFont(FontReader.FamilyNamesInfo names, FontReader.OS2Info os2info, string fileName)
         {
-            this.Family = family;
-            this.SubFamily = subFamily;
-            this.Name = name;
-            this.Weight = weight;
-            this.Bold = bold;
-            this.Italic = italic;
-            this.Underlined = underlined;
-            this.Negative = negative;
-            this.Outlined = outlined;
-            this.Strikeout = strikeout;
-            this.Regular = regular;
-            this.FileName = fileName;
-            this.Oblique = oblique;
-            this.Panose = new Panose(panose);
+            FamilyNames = names;
+            OS2Info = os2info;
+
+            Name = names.FontName;
+            Family = names.TypographicFamily;
+            SubFamily = names.TypographicSubfamily;
+
+            Weight = os2info.Weight;
+            FileName = fileName;
+
+            Panose = new Panose(os2info.Panose);
         }
+
 
         public override string ToString()
-        {
-            return this.SubFamily == null ? this.Family : this.Family + " " + this.SubFamily;
-        }
-        
+            => SubFamily == null ? Family : Family + " " + SubFamily;
+
 
         /// <summary>
         /// Gets a cached list of all OpenType fonts installed on the current system. This includes TTF, OTF and TTC formats.
