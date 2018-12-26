@@ -96,6 +96,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "4",
@@ -125,9 +126,9 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(240, 326);
+            this.label1.Location = new System.Drawing.Point(240, 330);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(309, 52);
+            this.label1.Size = new System.Drawing.Size(309, 48);
             this.label1.TabIndex = 3;
             this.label1.Text = "Sample text";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

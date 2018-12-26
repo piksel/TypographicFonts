@@ -20,9 +20,14 @@ namespace jnm2.TypographicFonts
 
             foreach (var installedFontFile in TypographicFont.GetInstalledFontFiles())
             {
-                if (!File.Exists(installedFontFile)) continue;
+                
+                if (!File.Exists(installedFontFile))
+                {
+                    continue;
+                }
                 foreach (var font in TypographicFont.FromFile(installedFontFile))
                 {
+                    
                     List<TypographicFont> list;
                     if (!subfamilesByFont.TryGetValue(font.Family, out list))
                         subfamilesByFont.Add(font.Family, list = new List<TypographicFont>());

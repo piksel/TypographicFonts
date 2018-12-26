@@ -13,8 +13,12 @@ namespace jnm2.TypographicFonts
 {
     public partial class TypographicFontDialog : Form
     {
-
+        public string FontName { get; set; }
         //Dictionary<string, TypoGra fonts;
+
+        public float FontSize { get; set; }
+
+        private TypographicFont selectedFont;
 
         public TypographicFontDialog()
         {
@@ -23,18 +27,41 @@ namespace jnm2.TypographicFonts
 
         private void TypographicFontDialog_Load(object sender, EventArgs e)
         {
-            foreach(var ff in TypographicFontFamily.InstalledFamilies)
+            /*
+            for (int i=0; i < listView2.Items.Count; i++)
+            {
+                var size = float.Parse(listView2.Items[i].Text);
+                if (FontSize > size) continue;
+                if (FontSize < size)
+                {
+                    listView2.Items.Insert(i, FontSize.ToString());
+                }
+                listView2.Items[i].Selected = true;
+                break;
+            }
+            */
+            comboBox1.SelectedIndex = -1;
+            comboBox1.Text = FontSize.ToString();
+
+            foreach (var ff in TypographicFontFamily.InstalledFamilies)
             {
                 //var fc = new PrivateFontCollection();
                 var normalFont = ff.NormalFont;
                 //fc.AddFontFile(normalFont.FileName);
                 var font = new FontFamily(normalFont.Name);
+                var famFont = ff.Fonts.FirstOrDefault(tf => tf.Name == FontName);
+                if (famFont != null)
+                {
+                    selectedFont = famFont;
+                }
+                
                 listView1.Items.Add(new ListViewItem()
                 {
                     Text = ff.Name,
                     Font = new Font(font, listView1.Font.Size, listView1.Font.Unit),
                     ToolTipText = ff.Name,
                     Tag = ff,
+                    Selected = famFont != null,
                     Group = normalFont.Panose.Proportion == Panose.PanoseProportion.Monospaced 
                         ? listView1.Groups["lvgMono"] 
                         : listView1.Groups["lvgNormal"]
@@ -52,13 +79,15 @@ namespace jnm2.TypographicFonts
 
             foreach(var font in fontFamily.Fonts.OrderBy( f => f.Weight ))
             {
+                //if (font.Italic) continue;
+
                 var family = new FontFamily(font.Name);
                 var newItem = listView2.Items.Add(new ListViewItem()
                 {
-                    Text = font.SubFamily ?? "Regular" + (font.Bold?" Bold":"") + (font.Italic?" Italic":""),
-                    Font = new Font(family, listView2.Font.Size, font.FontStyle, listView2.Font.Unit),
+                    Text = font.SubFamily ?? "Regular" + (font.Bold ? " Bold" : "") + (font.Italic ? " Italic" : ""),
+                    Font = new Font(font.Name, listView2.Font.Size, font.FontStyle, listView2.Font.Unit),
                     Tag = font,
-                    Selected = font == normal
+                    Selected = (selectedFont != null) ? font == selectedFont : font == normal
                 });
 
 
