@@ -1,74 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6E13332D-166B-4BF3-BB1D-FE0CB2CB3AB7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net45</TargetFramework>
     <RootNamespace>jnm2.TypographicFonts</RootNamespace>
-    <AssemblyName>TypographicFonts</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>TypographicFonts</PackageId>
+    <Authors>Joseph N. Musser II, Nils Måsén</Authors>
+    <Company>piksel bitworks</Company>
+    <RepositoryUrl>https://github.com/piksel/TypographicFonts</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>github</RepositoryType>
+    <AssemblyVersion>0.5.0.1</AssemblyVersion>
+    <FileVersion>0.5.0.1</FileVersion>
+    <Version>0.5.0</Version>
+    <Description>A .NET abstraction over typographical font families and subfamilies</Description>
+    <PackageProjectUrl>https://github.com/piksel/TypographicFonts</PackageProjectUrl>
+    <PackageOutputPath>../dist/</PackageOutputPath>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <Product>Piksel.Graphics.TypographicFonts</Product>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BigEndianBinaryReader.cs" />
-    <Compile Include="DelegateKeyedCollection.cs" />
-    <Compile Include="FontExtensions.cs" />
-    <Compile Include="FontReader.cs" />
-    <Compile Include="Panose.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadOnlyKeyedCollection.cs" />
-    <Compile Include="TypographicFont.cs" />
-    <Compile Include="TypographicFontDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TypographicFontDialog.Designer.cs">
-      <DependentUpon>TypographicFontDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TypographicFontFamily.cs" />
-    <Compile Include="TypographicFontWeight.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TypographicFontDialog.resx">
-      <DependentUpon>TypographicFontDialog.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
